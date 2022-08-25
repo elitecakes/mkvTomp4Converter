@@ -33,36 +33,29 @@ def main():
                 print("Found file: %s" % file)
  #               if (continueOrNot() == False):
 #                    continue
-                namemp4 = convert_to_mp4(os.path.join(mkvDir, file))
-                move_to_mp4_folder(namemp4, mkvDir, mp4Dir)
-
+                namemp4 = convert_to_mp4(os.path.join(mkvDir, file)) #convert to mp4 wwhiel also returning the name of the file.mp4 to make moving it easier in the next function
+                move_to_mp4_folder(namemp4, mkvDir, mp4Dir) #moving the newly created file to desired folder
             else:
                 pass
     
 def convert_to_mp4(mkv_file):
-    name, ext = os.path.splitext(mkv_file)
+    name, ext = os.path.splitext(mkv_file) #video.mkv --> name = video, ext = .mkv
     out_name = name + ".mp4"
-    ffmpeg.input(mkv_file).output(out_name).run()
+    ffmpeg.input(mkv_file).output(out_name).run() #idk but this is the main video conversion function
     print("Finished converting {}".format(mkv_file))
-    return out_name
+    return out_name #returning video.mp4 to make it easier for moving
 
 def continueOrNot():
     yn = input('\n1 to convert this file 0 to skip to next file: ')
     if (yn == 1):
-        return True
+        return True #simple method to stop the program after every file is read, though it doesnt really work and I don't really know why
     else:
         return False
 
 def move_to_mp4_folder(file, mkvDir, mp4Dir):
-    filepathTrue = os.path.join(mkvDir, file)
-    shutil.move(filepathTrue, mp4Dir)# + "/" + file)
+    filepathTrue = os.path.join(mkvDir, file) #os.path.abspath() doesn't give full destination required so this is another method of getting it
+    shutil.move(filepathTrue, mp4Dir) #moving file
     print("moved " + file +"\n")
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
